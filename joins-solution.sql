@@ -33,7 +33,14 @@ FROM warehouse W, (
 WHERE W.id = Y.warehouse_id;
 
 -- Get the number of orders for each customer. NOTE: It is OK if those without orders are not included in results.
-
+SELECT C.first_name, COUNT (O.order_date)
+AS num_orders
+FROM customers C
+    JOIN addresses A
+    ON C.id = A.customer_id
+        LEFT JOIN orders O
+        ON A.id = O.address_id
+        GROUP BY C.id;
 
 -- How many customers do we have?
 SELECT COUNT(id) FROM customers;
